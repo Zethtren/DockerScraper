@@ -52,3 +52,8 @@ Without modification to the set-up you can expect <~25GB of data to be collected
 ## Future plans:
 I intend to work on integrating this into kubernetes so I can create a ML workflow based on this data. I will also be working to create an automated trading platform based on the ML suggeestions were custom models can be passed to make trades with. 
 This will likely be separated from the this project and run on a separate network to maintain data integrity and security as well as failover.
+
+## References:
+Library used to build web-socket connection as well as general boilerplate for the scraper.py file [copra](https://github.com/tpodlaski/copra)<br>
+Library used to connect scraper to SQL Server [pyodbc](https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/python-sql-driver-pyodbc?view=sql-server-ver15#:~:text=PyODBC%20is%20community-supported%20software.%20Microsoft%20contributes%20to%20the,GitHub%20repository%20or%20visit%20other%20Python%20community%20resources.)<br>
+[Docker](https://www.docker.com/products/docker-desktop) and [docker-compose](https://docs.docker.com/compose/install/)
