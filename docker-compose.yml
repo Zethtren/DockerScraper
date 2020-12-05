@@ -1,0 +1,77 @@
+# Notes on docker-compose file
+
+# The name of your application will default to the folder name containing the file
+# It is only necesarry to have the docker-compose.yml
+# All other files will be pulled from my Docker Hub
+
+# All areas marked SA_PASSWORD must be present and equivalent. 
+# If they are omitted a default password will be set to "asdffdsaasdffdsa1234!" (This will cause errors if they don't match!)
+# All areas marked DB_NAME must == ticks. Currently using .sql file to build DB will adjust to dynamic script in future. 
+
+# SERVER_NAME on scraper instances need to be set to the same value as "container_name:" on sql-server instance
+# TABLE_NAME is used to access the coinbase market place so it must be a valid coin base pair e.g. BTC-USD, ETH-USD, ETH-BTC
+# If table name is incorrect it will default to BTC-USD and save to your custom table name in the database. 
+# Error messages on this will be logged to the console
+
+# If you want to scrape more markets simply take the code for a block starting from scraper_*******: to the next line break and copy and paste it to the end.
+# This will add another python container to the application. 
+# I recommend changing the service name scraper_********: , hostname: , container_name: , and TABLE_NAME for easy readability.
+
+
+
+version: "3.7"
+services:
+  sql-server:
+    image: zethtren/mssql_server:future
+    hostname: custom-server
+    container_name: custom-server
+    ports:
+      - "1435:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=custompassword1234!
+      - MSSQL_PID=Developer
+      - DB_NAME=ticks  # Cannot be changed as of now
+    restart: on-failure
+
+  scraper_BTCUSD:
+    depends_on: 
+      - sql-server
+    image: zethtren/scraper:future
+    hostname: scraper_BTCUSD
+    container_name: scraper_BTCUSD
+    environment: 
+      - SA_PASSWORD=custompassword1234! 
+      - TABLE_NAME=BTC-USD
+      - DB_NAME=ticks  # Cannot be changed as of now. (Change will work on scraper but, not on SQL Server Instance as of yet. So saves will be broken if this is changed)
+      - LOG_INSERTS=True
+      - SERVER_NAME=custom-server 
+    restart: on-failure
+
+  scraper_ETHBTC:
+    depends_on: 
+      - sql-server
+    image: zethtren/scraper:future
+    hostname: scraper_ETHBTC
+    container_name: scraper_ETHBTC
+    environment: 
+      - SA_PASSWORD=custompassword1234! 
+      - TABLE_NAME=ETH-BTC
+      - DB_NAME=ticks  # Cannot be changed as of now. (Change will work on scraper but, not on SQL Server Instance as of yet. So saves will be broken if this is changed)
+      - LOG_INSERTS=True
+      - SERVER_NAME=custom-server 
+    restart: on-failure
+
+  scraper_ETHUSD:
+    depends_on: 
+      - sql-server
+    image: zethtren/scraper:future
+    hostname: scraper_ETHUSD
+    container_name: scraper_ETHUSD
+    environment: 
+      - SA_PASSWORD=custompassword1234! 
+      - TABLE_NAME=ETH-USD
+      - DB_NAME=ticks  # Cannot be changed as of now. (Change will work on scraper but, not on SQL Server Instance as of yet. So saves will be broken if this is changed)
+      - LOG_INSERTS=True
+      - SERVER_NAME=custom-server 
+    restart: on-failure

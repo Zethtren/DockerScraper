@@ -1,0 +1,4 @@
+CREATE DATABASE ticks;
+GO
+USE ticks;
+GO
