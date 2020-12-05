@@ -29,7 +29,7 @@ services:
     hostname: custom-server
     container_name: custom-server
     ports:
-      - "1433:1433"
+      - "1433:1433" # The first port number is the one you will access from your local computer i.e. localhost,1400 if you change it to 1400:1433 
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=custompassword1234!
