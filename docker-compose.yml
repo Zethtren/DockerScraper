@@ -4,6 +4,9 @@
 # It is only necesarry to have the docker-compose.yml
 # All other files will be pulled from my Docker Hub
 
+# You will see errors for up to 45 seconds as the scrapers try to connect before the ticks db is established
+# Once established these errors will cease.
+
 # All areas marked SA_PASSWORD must be present and equivalent. 
 # If they are omitted a default password will be set to "asdffdsaasdffdsa1234!" (This will cause errors if they don't match!)
 # All areas marked DB_NAME must == ticks. Currently using .sql file to build DB will adjust to dynamic script in future. 
@@ -22,11 +25,11 @@
 version: "3.7"
 services:
   sql-server:
-    image: zethtren/mssql_server:future
+    image: zethtren/mssql_server:latest
     hostname: custom-server
     container_name: custom-server
     ports:
-      - "1435:1433"
+      - "1433:1433"
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=custompassword1234!
@@ -37,7 +40,7 @@ services:
   scraper_BTCUSD:
     depends_on: 
       - sql-server
-    image: zethtren/scraper:future
+    image: zethtren/scraper:latest
     hostname: scraper_BTCUSD
     container_name: scraper_BTCUSD
     environment: 
@@ -51,7 +54,7 @@ services:
   scraper_ETHBTC:
     depends_on: 
       - sql-server
-    image: zethtren/scraper:future
+    image: zethtren/scraper:latest
     hostname: scraper_ETHBTC
     container_name: scraper_ETHBTC
     environment: 
@@ -65,7 +68,7 @@ services:
   scraper_ETHUSD:
     depends_on: 
       - sql-server
-    image: zethtren/scraper:future
+    image: zethtren/scraper:latest
     hostname: scraper_ETHUSD
     container_name: scraper_ETHUSD
     environment: 
