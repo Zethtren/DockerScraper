@@ -13,7 +13,10 @@ If you run the docker-compose file without modification:
 - Your password will be 'custompassword1234!'
 - You will have 3 tables in your 'ticks' database ('BTC-USD', 'ETH-USD', 'ETH-BTC')
 
-This project has been tested running on windows and mac as low as 4 cpu cores without any error or missed data over the course of 24 hours. 
+I have tested connecting to this from both Azure Data Studio as well SSMS without any issues.
+
+
+This project has been tested running on windows and mac as low as 4 cpu cores without any error or missed data over the course of 24 hours. I have even tested it while running apps that display 100% CPU and GPU usage. There was no failure in any of the insertions.
 
 The containers will automatically spin up again if they fail out. Any data commited to the container will be saved. If the container is deleted completely and rebuilt then there will be no stored data. 
 
